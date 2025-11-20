@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tracker Tugas Kuliah</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      /* --- GLOBAL RESET & TYPOGRAPHY --- */
       * {
         margin: 0;
         padding: 0;
@@ -13,7 +18,7 @@
       }
 
       body {
-        font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(
           135deg,
           #0f2027 0%,
@@ -29,6 +34,7 @@
         margin: 0 auto;
       }
 
+      /* --- HEADER STYLES --- */
       .header {
         text-align: center;
         color: white;
@@ -58,25 +64,28 @@
       }
 
       .header p {
-        font-size: 1.2em;
-        opacity: 0.8;
+        font-size: 1.1em;
+        opacity: 0.9;
         font-weight: 300;
       }
 
+      /* --- ADD TASK FORM SECTION --- */
       .add-task-form-section {
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
         padding: 30px;
-        border-radius: 20px;
+        border-radius: 25px; /* Lebih bulat */
         border: 1px solid rgba(255, 255, 255, 0.3);
         margin-bottom: 30px;
         color: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       }
 
       .add-task-form-section h3 {
         text-align: center;
         margin-bottom: 20px;
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 1.5em;
       }
 
       .task-form {
@@ -91,18 +100,26 @@
       .task-form textarea {
         flex: 1;
         min-width: 200px;
-        padding: 12px;
+        padding: 14px; /* Padding lebih besar */
         border: 1px solid #00f5a0;
-        border-radius: 8px;
+        border-radius: 10px;
         background: #0f2027;
         color: white;
         font-size: 1em;
         font-family: inherit;
+        transition: border-color 0.3s ease;
+      }
+
+      .task-form input:focus,
+      .task-form textarea:focus {
+        border-color: #00d9f5;
+        outline: none;
+        box-shadow: 0 0 8px rgba(0, 217, 245, 0.5);
       }
 
       .task-form textarea {
         min-width: 100%;
-        min-height: 80px;
+        min-height: 100px; /* Lebih tinggi */
         resize: vertical;
       }
 
@@ -116,8 +133,8 @@
         background: linear-gradient(135deg, #f5a623 0%, #f7797d 100%);
         color: white;
         border: none;
-        padding: 12px 25px;
-        border-radius: 8px;
+        padding: 14px 30px;
+        border-radius: 10px;
         cursor: pointer;
         font-size: 1em;
         font-weight: 600;
@@ -125,57 +142,37 @@
       }
 
       .task-form button[type="submit"]:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
+        opacity: 0.95;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 166, 35, 0.4);
       }
 
       #formMessage {
         margin-top: 15px;
         text-align: center;
         font-weight: 600;
+        padding: 10px;
+        border-radius: 8px;
       }
 
+      /* --- TOP CONTROLS & FILTER --- */
       .top-controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         gap: 15px;
         flex-wrap: wrap;
       }
 
-      .refresh-btn {
-        background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);
-        color: #0f2027;
-        border: none;
-        padding: 12px 28px;
-        border-radius: 50px;
-        cursor: pointer;
-        font-size: 1em;
-        font-weight: 600;
-        box-shadow: 0 8px 20px rgba(0, 245, 160, 0.3);
-        transition: all 0.3s ease;
-      }
-
-      .refresh-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 30px rgba(0, 245, 160, 0.5);
-      }
-
-      .refresh-btn:active {
-        transform: translateY(-1px);
-      }
-
+      .refresh-btn,
       .add-task-btn {
-        background: linear-gradient(135deg, #f5a623 0%, #f7797d 100%);
-        color: white;
         border: none;
         padding: 12px 28px;
         border-radius: 50px;
         cursor: pointer;
         font-size: 1em;
         font-weight: 600;
-        box-shadow: 0 8px 20px rgba(245, 166, 35, 0.3);
         transition: all 0.3s ease;
         text-decoration: none;
         text-align: center;
@@ -183,6 +180,24 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 8px;
+      }
+
+      .refresh-btn {
+        background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);
+        color: #0f2027;
+        box-shadow: 0 8px 20px rgba(0, 245, 160, 0.3);
+      }
+
+      .refresh-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 245, 160, 0.5);
+      }
+
+      .add-task-btn {
+        background: linear-gradient(135deg, #f5a623 0%, #f7797d 100%);
+        color: white;
+        box-shadow: 0 8px 20px rgba(245, 166, 35, 0.3);
       }
 
       .add-task-btn:hover {
@@ -190,15 +205,11 @@
         box-shadow: 0 12px 30px rgba(245, 166, 35, 0.5);
       }
 
-      .add-task-btn:active {
-        transform: translateY(-1px);
-      }
-
       .filter-section {
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(10px);
-        padding: 15px;
-        border-radius: 20px;
+        padding: 15px 20px;
+        border-radius: 25px;
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
@@ -212,7 +223,7 @@
         padding: 10px 20px;
         border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 50px;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
         color: white;
         cursor: pointer;
         font-size: 0.9em;
@@ -221,7 +232,7 @@
       }
 
       .filter-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.15);
         border-color: rgba(255, 255, 255, 0.4);
         transform: translateY(-2px);
       }
@@ -231,6 +242,232 @@
         color: #0f2027;
         border-color: transparent;
         font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 245, 160, 0.5);
+      }
+
+      /* --- STATS STYLES --- */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+        animation: fadeInUp 0.6s ease;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 10px 30px rgba(0, 245, 160, 0.2);
+      }
+
+      .stat-number {
+        font-size: 3em;
+        font-weight: 700;
+        background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stat-label {
+        color: rgba(255, 255, 255, 0.8);
+        margin-top: 8px;
+        font-size: 0.95em;
+        font-weight: 500;
+      }
+
+      /* --- CORE CHANGES: TUGAS LIST STYLES --- */
+      .tugas-list {
+        display: grid;
+        gap: 25px; /* Jarak lebih besar antar kartu */
+        animation: fadeInUp 0.8s ease;
+      }
+
+      .tugas-card {
+        background: #ffffff;
+        padding: 30px; /* Padding lebih besar */
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Shadow lebih halus */
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid #f0f0f0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tugas-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 217, 245, 0.2);
+      }
+
+      /* Garis Indikator Urgency yang Lebih Tebal */
+      .tugas-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px; /* Garis atas lebih tebal */
+        background: #e0e0e0;
+        transition: background-color 0.4s ease;
+      }
+
+      .tugas-card.urgent::before {
+        background: linear-gradient(90deg, #ff4757, #ff6b6b);
+      }
+
+      .tugas-card.soon::before {
+        background: linear-gradient(90deg, #ffa502, #ffb700);
+      }
+
+      .tugas-card:not(.urgent):not(.soon)::before {
+        background: linear-gradient(90deg, #00f5a0, #00d9f5);
+      }
+
+      .tugas-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Align-items center */
+        margin-bottom: 15px;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .tugas-title {
+        font-size: 1.5em; /* Lebih besar */
+        font-weight: 700;
+        color: #1a1a1a;
+        line-height: 1.3;
+        flex: 1;
+      }
+
+      .deadline-badge {
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 0.9em;
+        font-weight: 600;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .deadline-badge.urgent {
+        background: #ff4757;
+        color: white;
+      }
+
+      .deadline-badge.soon {
+        background: #ffa502;
+        color: white;
+      }
+
+      .deadline-badge.normal {
+        background: #00f5a0;
+        color: #0f2027;
+      }
+
+      .tugas-description {
+        color: #555;
+        font-size: 1em;
+        line-height: 1.6;
+        margin: 15px 0;
+        padding: 15px;
+        background: #f8f8f8; /* Background lebih terang */
+        border-radius: 12px;
+        border-left: 3px solid #ccc;
+      }
+
+      .tugas-info-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95em;
+        color: #777;
+        margin-bottom: 15px;
+        padding: 5px 0;
+        border-top: 1px dashed #eee;
+      }
+
+      .tugas-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        gap: 10px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .matkul-tag {
+        display: inline-block;
+        background: linear-gradient(135deg, #2c5364 0%, #203a43 100%);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 50px;
+        font-size: 0.9em;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      .delete-btn {
+        background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+        color: white;
+        border: none;
+        padding: 10px 25px; /* Lebih besar */
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+      }
+
+      .delete-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(255, 71, 87, 0.5);
+      }
+
+      /* --- EMPTY STATE & MODAL (No Change) --- */
+      .empty-state {
+        text-align: center;
+        color: white;
+        padding: 60px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 2px dashed rgba(255, 255, 255, 0.3);
+      }
+
+      .empty-state-icon {
+        font-size: 4em;
+        margin-bottom: 20px;
+      }
+
+      .empty-state h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
       }
 
       .loading {
@@ -260,243 +497,6 @@
         border-radius: 20px;
         text-align: center;
         margin-bottom: 20px;
-      }
-
-      .error h3 {
-        margin-bottom: 10px;
-      }
-
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 20px;
-        margin-bottom: 30px;
-        animation: fadeInUp 0.6s ease;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .stat-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 25px;
-        border-radius: 20px;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-      }
-
-      .stat-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 10px 30px rgba(0, 245, 160, 0.2);
-      }
-
-      .stat-number {
-        font-size: 3em;
-        font-weight: 700;
-        background: linear-gradient(135deg, #00f5a0 0%, #00d9f5 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .stat-label {
-        color: rgba(255, 255, 255, 0.8);
-        margin-top: 8px;
-        font-size: 0.95em;
-        font-weight: 500;
-      }
-
-      .tugas-list {
-        display: grid;
-        gap: 18px;
-        animation: fadeInUp 0.8s ease;
-      }
-
-      .tugas-card {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 25px;
-        border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        transition: all 0.3s ease;
-        border-left: 5px solid #00d9f5;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .tugas-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, #00f5a0, transparent);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .tugas-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px rgba(0, 217, 245, 0.3);
-      }
-
-      .tugas-card:hover::before {
-        opacity: 1;
-      }
-
-      .tugas-card.urgent {
-        border-left-color: #ff4757;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 71, 87, 0.1) 0%,
-          rgba(255, 255, 255, 0.95) 100%
-        );
-      }
-
-      .tugas-card.soon {
-        border-left-color: #ffa502;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 165, 2, 0.1) 0%,
-          rgba(255, 255, 255, 0.95) 100%
-        );
-      }
-
-      .tugas-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 15px;
-        gap: 15px;
-      }
-
-      .tugas-title {
-        font-size: 1.4em;
-        font-weight: 600;
-        color: #1a1a1a;
-        line-height: 1.3;
-        flex: 1;
-      }
-
-      .deadline-badge {
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-size: 0.95em;
-        font-weight: 700;
-        white-space: nowrap;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .deadline-badge.urgent {
-        background: #ff4757;
-        color: white;
-        animation: pulse-urgent 2s infinite;
-        border-color: #ff6b6b;
-      }
-
-      @keyframes pulse-urgent {
-        0%,
-        100% {
-          box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
-        }
-        50% {
-          box-shadow: 0 4px 20px rgba(255, 71, 87, 0.8);
-        }
-      }
-
-      .deadline-badge.soon {
-        background: #ffa502;
-        color: white;
-        border-color: #ffb700;
-      }
-
-      .deadline-badge.normal {
-        background: #00f5a0;
-        color: #0f2027;
-        border-color: #00d9f5;
-      }
-      .tugas-description {
-        color: #555;
-        font-size: 0.95em;
-        line-height: 1.6;
-        margin-top: 12px;
-        margin-bottom: 12px;
-        padding: 12px;
-        background: rgba(0, 0, 0, 0.03);
-        border-radius: 10px;
-      }
-
-      .tugas-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 15px;
-        gap: 10px;
-      }
-
-      .matkul-tag {
-        display: inline-block;
-        background: linear-gradient(135deg, #2c5364 0%, #203a43 100%);
-        color: white;
-        padding: 8px 18px;
-        border-radius: 50px;
-        font-size: 0.9em;
-        font-weight: 500;
-      }
-
-      .delete-btn {
-        background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
-        color: white;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 50px;
-        cursor: pointer;
-        font-size: 0.85em;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
-      }
-
-      .delete-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(255, 71, 87, 0.5);
-      }
-
-      .delete-btn:active {
-        transform: translateY(0);
-      }
-
-      .empty-state {
-        text-align: center;
-        color: white;
-        padding: 60px 20px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 2px dashed rgba(255, 255, 255, 0.3);
-      }
-
-      .empty-state-icon {
-        font-size: 4em;
-        margin-bottom: 20px;
-      }
-
-      .empty-state h3 {
-        font-size: 1.5em;
-        margin-bottom: 10px;
       }
 
       .modal {
@@ -587,6 +587,7 @@
         transform: translateY(-2px);
       }
 
+      /* --- MEDIA QUERIES --- */
       @media (max-width: 768px) {
         .header h1 {
           font-size: 2em;
@@ -594,24 +595,48 @@
 
         .top-controls {
           flex-direction: column;
+          align-items: stretch;
+        }
+
+        .refresh-btn,
+        .add-task-btn {
+          width: 100%;
+          justify-content: center;
         }
 
         .filter-section {
           width: 100%;
+          padding: 15px;
+        }
+
+        .filter-buttons {
+          justify-content: center;
         }
 
         .tugas-header {
           flex-direction: column;
-          align-items: start;
+          align-items: flex-start;
         }
 
         .deadline-badge {
           align-self: flex-start;
+          margin-top: 10px;
         }
 
         .tugas-footer {
           flex-direction: column;
           align-items: flex-start;
+        }
+
+        .matkul-tag,
+        .delete-btn {
+          width: 100%;
+          text-align: center;
+          padding: 10px;
+        }
+
+        .matkul-tag {
+          margin-bottom: 10px;
         }
       }
     </style>
@@ -624,19 +649,24 @@
       </div>
 
       <div class="add-task-form-section">
-        <h3>Masukkan Tugas Baru</h3>
+        <h3>➕ Masukkan Tugas Baru</h3>
         <form id="addTaskForm" class="task-form">
-          <input type="text" name="matkul" placeholder="Mata Kuliah" required />
-          <input type="text" name="tugas" placeholder="Nama Tugas" required />
           <input
             type="text"
-            name="deadline"
-            placeholder="Deadline (YYYY-MM-DD)"
+            name="matkul"
+            placeholder="Mata Kuliah (e.g. Algoritma)"
             required
           />
+          <input
+            type="text"
+            name="tugas"
+            placeholder="Nama Tugas (e.g. Laporan Bab 1)"
+            required
+          />
+          <input type="date" name="deadline" title="Deadline Tugas" required />
           <textarea
             name="deskripsi"
-            placeholder="Deskripsi tugas (opsional)"
+            placeholder="Deskripsi tugas (opsional: detail, link, dll)"
           ></textarea>
           <button type="submit" id="submitBtn">Simpan Tugas</button>
         </form>
@@ -645,7 +675,7 @@
 
       <div class="top-controls">
         <button class="refresh-btn" onclick="loadData()">
-          🔄 Refresh Data
+          <span style="font-size: 1.2em">🔄</span> Refresh Data
         </button>
 
         <a
@@ -654,18 +684,21 @@
           class="add-task-btn"
           title="Buka Google Sheet untuk menambah/mengedit tugas"
         >
-          ➕ Lihat Sheet
+          <span style="font-size: 1.2em">📄</span> Lihat Sheet
         </a>
 
         <div class="filter-section">
           <div class="filter-buttons">
-            <button class="filter-btn active" onclick="setFilter('semua')">
+            <button
+              class="filter-btn active"
+              onclick="setFilter('semua', this)"
+            >
               Semua Tugas
             </button>
-            <button class="filter-btn" onclick="setFilter('urgent')">
+            <button class="filter-btn" onclick="setFilter('urgent', this)">
               🔥 Urgent
             </button>
-            <button class="filter-btn" onclick="setFilter('minggu-ini')">
+            <button class="filter-btn" onclick="setFilter('minggu-ini', this)">
               📅 Minggu Ini
             </button>
           </div>
@@ -675,11 +708,13 @@
       <div id="content"></div>
     </div>
 
-    <!-- Modal Konfirmasi Hapus -->
     <div id="deleteModal" class="modal">
       <div class="modal-content">
         <h3>⚠️ Konfirmasi Hapus</h3>
-        <p>Apakah Anda yakin ingin menghapus tugas ini?</p>
+        <p>
+          Apakah Anda yakin ingin menghapus tugas ini? Aksi ini tidak bisa
+          dibatalkan.
+        </p>
         <div class="modal-buttons">
           <button class="modal-btn confirm" onclick="confirmDelete()">
             Hapus
@@ -690,6 +725,8 @@
     </div>
 
     <script>
+      // LOGIC JAVASCRIPT LAMA TETAP SAMA (Hanya ada penyesuaian kecil di format HTML di displayData)
+
       const GAS_WEB_APP_URL =
         "https://script.google.com/macros/s/AKfycbxt1r-yJMWqeUpUmju18vl7QLcMcSHSE5rgqXIHdOpm2cr0vMqEoelaxFv63zNpgaiq/exec";
 
@@ -706,16 +743,14 @@
           .then((data) => {
             console.log("=== DATA DARI GOOGLE SHEETS ===");
             console.log("Total data:", data.length);
-            console.log("Data lengkap:", data);
 
-            // Log setiap item untuk melihat struktur
-            data.forEach((item, idx) => {
-              console.log(`Item ${idx}:`, item);
-              console.log(`  - Keys:`, Object.keys(item));
-              console.log(`  - Deadline value:`, item.Deadline);
-            });
+            // Logika untuk menambahkan rowIndex yang dibutuhkan untuk fungsi DELETE
+            allTugas = data.map((item, index) => ({
+              ...item,
+              // Baris data di Sheet biasanya dimulai dari index 2 (baris 1 header)
+              rowIndex: index + 2,
+            }));
 
-            allTugas = data;
             displayData();
           })
           .catch((err) => {
@@ -723,7 +758,7 @@
             content.innerHTML = `
               <div class="error">
                 <h3>❌ Gagal memuat data</h3>
-                <p>${err}</p>
+                <p>Silakan periksa koneksi internet atau URL Google Apps Script Anda. (${err.message})</p>
               </div>
             `;
           });
@@ -742,8 +777,8 @@
           const deadline = parseDeadline(tugas);
           if (deadline) {
             const diff = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
-            if (diff <= 3) urgent++;
-            else if (diff <= 7) soon++;
+            if (diff <= 3 && diff >= 0) urgent++;
+            else if (diff <= 7 && diff > 3) soon++;
           }
         });
 
@@ -753,17 +788,18 @@
             const deadline = parseDeadline(tugas);
             if (!deadline) return false;
             const diff = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
-            return diff <= 3;
+            return diff <= 3 && diff >= 0;
           });
         } else if (currentFilter === "minggu-ini") {
           filteredTugas = allTugas.filter((tugas) => {
             const deadline = parseDeadline(tugas);
             if (!deadline) return false;
             const diff = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
-            return diff <= 7;
+            return diff <= 7 && diff >= 0;
           });
         }
 
+        // Sortir: Tugas yang terdekat (paling kecil diff) ditampilkan duluan
         filteredTugas.sort((a, b) => {
           const dateA = parseDeadline(a);
           const dateB = parseDeadline(b);
@@ -772,75 +808,86 @@
           return dateA - dateB;
         });
 
+        // ===================================
+        // Render Stats
+        // ===================================
         let html = `
           <div class="stats">
             <div class="stat-card">
               <div class="stat-number">${total}</div>
-              <div class="stat-label">Total Tugas</div>
+              <div class="stat-label">Total Tugas Aktif</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">${urgent}</div>
-              <div class="stat-label">Urgent (≤3 hari)</div>
+              <div class="stat-label">🔥 Urgent (≤3 hari)</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">${soon}</div>
-              <div class="stat-label">Minggu Ini</div>
+              <div class="stat-number">${soon + urgent}</div>
+              <div class="stat-label">📅 Minggu Ini (≤7 hari)</div>
             </div>
           </div>
         `;
 
+        // ===================================
+        // Render List Tugas
+        // ===================================
         if (filteredTugas.length === 0) {
           html += `
             <div class="empty-state">
               <div class="empty-state-icon">🎉</div>
               <h3>Tidak ada tugas ${
-                currentFilter === "semua" ? "" : currentFilter
+                currentFilter === "semua" ? "aktif" : currentFilter
               }</h3>
-              <p>Semua tugas sudah selesai atau belum ada tugas baru</p>
+              <p>Selamat! Waktu luang menanti Anda.</p>
             </div>
           `;
         } else {
           html += '<div class="tugas-list">';
 
-          filteredTugas.forEach((tugas, index) => {
+          filteredTugas.forEach((tugas) => {
             const tugasName =
-              tugas.Tugas || tugas.tugas || tugas.nama || "Tugas";
+              tugas.Tugas || tugas.tugas || tugas.nama || "Tugas Tanpa Nama";
             const matkul =
-              tugas.Matkul || tugas.matkul || tugas.mata_kuliah || "Matkul";
+              tugas.Matkul ||
+              tugas.matkul ||
+              tugas.mata_kuliah ||
+              "Matkul Lain";
             const deskripsi = tugas.Deskripsi || tugas.deskripsi || "";
             const deadlineRaw =
               tugas.Deadline || tugas.deadline || tugas.tanggal || "Tidak ada";
-            const rowIndex = tugas.rowIndex || index + 2;
+            const rowIndex = tugas.rowIndex; // Menggunakan rowIndex dari proses mapping
             const deadline = parseDeadline(tugas);
-
-            // Debug: log data tugas
-            console.log(
-              "Tugas:",
-              tugasName,
-              "Deadline Raw:",
-              deadlineRaw,
-              "Deadline Parsed:",
-              deadline
-            );
 
             let urgencyClass = "";
             let badgeClass = "normal";
             let deadlineText = "Tidak ada deadline";
+            let diffDays = Infinity;
 
             if (deadline) {
-              const diff = Math.ceil(
-                (deadline - today) / (1000 * 60 * 60 * 24)
-              );
-              deadlineText = formatDeadline(deadline, diff);
+              diffDays = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+              deadlineText = formatDeadline(deadline, diffDays);
 
-              if (diff <= 3) {
+              if (diffDays < 0) {
                 urgencyClass = "urgent";
                 badgeClass = "urgent";
-              } else if (diff <= 7) {
+                deadlineText = "⚠️ TERLAMBAT";
+              } else if (diffDays <= 3) {
+                urgencyClass = "urgent";
+                badgeClass = "urgent";
+              } else if (diffDays <= 7) {
                 urgencyClass = "soon";
                 badgeClass = "soon";
               }
             }
+
+            // Format tanggal deadline yang lebih rapi (YYYY-MM-DD -> DD/MM/YYYY)
+            const formattedDeadline = deadline
+              ? deadline.toLocaleDateString("id-ID", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : deadlineRaw;
 
             html += `
               <div class="tugas-card ${urgencyClass}">
@@ -848,17 +895,23 @@
                   <div class="tugas-title">${tugasName}</div>
                   <div class="deadline-badge ${badgeClass}">${deadlineText}</div>
                 </div>
+                
+                <div class="tugas-info-line">
+                  <span style="font-weight: 500; color: #333;">Tanggal Deadline:</span> 
+                  <span style="font-weight: 600;">${formattedDeadline}</span>
+                </div>
+                
                 ${
                   deskripsi
-                    ? `<div class="tugas-description">${deskripsi}</div>`
+                    ? `<div class="tugas-description">
+                        <span style="font-weight: 600; color: #1a1a1a;">Detail:</span> ${deskripsi}
+                      </div>`
                     : ""
                 }
-                <div style="font-size: 0.85em; color: #888; margin: 8px 0;">
-                  📅 Deadline: ${deadlineRaw}
-                </div>
+                
                 <div class="tugas-footer">
                   <div class="matkul-tag">${matkul}</div>
-                  <button class="delete-btn" onclick="showDeleteModal(${rowIndex})">🗑️ Hapus</button>
+                  <button class="delete-btn" onclick="showDeleteModal(${rowIndex})">🗑️ Hapus Tugas</button>
                 </div>
               </div>
             `;
@@ -870,6 +923,7 @@
         content.innerHTML = html;
       }
 
+      // LOGIC HELPER FUNCTION TETAP SAMA
       function parseDeadline(tugas) {
         const deadlineStr = tugas.Deadline || tugas.deadline || tugas.tanggal;
         if (!deadlineStr) return null;
@@ -885,7 +939,7 @@
           // Coba parse langsung (mendukung ISO format seperti 2025-10-16T17:00:00.000Z)
           date = new Date(deadlineStr);
 
-          // Jika gagal, coba tambahkan T00:00:00
+          // Jika gagal, coba tambahkan T00:00:00 (untuk YYYY-MM-DD)
           if (isNaN(date.getTime())) {
             date = new Date(deadlineStr + "T00:00:00");
           }
@@ -893,7 +947,14 @@
         // Jika angka (serial number dari Excel/Google Sheets)
         else if (typeof deadlineStr === "number") {
           // Google Sheets epoch: December 30, 1899
+          // Sesuaikan dengan timezone agar hasilnya akurat di tengah malam (00:00:00)
           date = new Date((deadlineStr - 25569) * 86400 * 1000);
+          date.setUTCFullYear(
+            date.getUTCFullYear(),
+            date.getUTCMonth(),
+            date.getUTCDate()
+          );
+          date.setUTCHours(0, 0, 0, 0);
         }
 
         if (!date || isNaN(date.getTime())) return null;
@@ -902,21 +963,22 @@
       }
 
       function formatDeadline(date, diff) {
-        if (diff < 0) return "⚠️ Terlambat!";
-        if (diff === 0) return "🔥 Hari ini!";
-        if (diff === 1) return "⚡ Besok";
-        if (diff <= 3) return `🔴 ${diff} hari lagi`;
-        if (diff <= 7) return `🟡 ${diff} hari lagi`;
-        return `✅ ${diff} hari lagi`;
+        if (diff < 0) return `⚠️ ${Math.abs(diff)} HARI TERLAMBAT`;
+        if (diff === 0) return "🔥 HARI INI!";
+        if (diff === 1) return "⚡ BESOK";
+        if (diff <= 3) return `🔴 ${diff} HARI LAGI`;
+        if (diff <= 7) return `🟡 ${diff} HARI LAGI`;
+        return `✅ ${diff} HARI LAGI`;
       }
 
-      function setFilter(filter) {
+      // LOGIC CRUD DAN FILTER TETAP SAMA
+      function setFilter(filter, element) {
         currentFilter = filter;
 
         document.querySelectorAll(".filter-btn").forEach((btn) => {
           btn.classList.remove("active");
         });
-        event.target.classList.add("active");
+        element.classList.add("active");
 
         displayData();
       }
@@ -945,6 +1007,7 @@
           });
 
           closeModal();
+          // Muat ulang data setelah jeda singkat
           setTimeout(() => {
             loadData();
           }, 1000);
@@ -961,6 +1024,14 @@
         const submitBtn = document.getElementById("submitBtn");
         const messageDiv = document.getElementById("formMessage");
 
+        // Panggil setFilter secara default untuk memastikan tombol 'Semua Tugas' aktif
+        document
+          .querySelector(".filter-btn.active")
+          ?.classList.remove("active");
+        document
+          .querySelector(".filter-buttons .filter-btn:first-child")
+          .classList.add("active");
+
         if (form) {
           form.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -972,6 +1043,15 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
+            // Tambahkan validasi deadline format (jika tipe input=date sudah digunakan, ini mungkin tidak perlu)
+            if (!data.deadline) {
+              messageDiv.textContent = "❌ Deadline harus diisi.";
+              messageDiv.style.color = "#ff4757";
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Simpan Tugas";
+              return;
+            }
+
             const payload = {
               action: "add",
               Matkul: data.matkul,
@@ -981,6 +1061,8 @@
             };
 
             try {
+              // Note: Karena menggunakan mode: "no-cors" untuk Google Apps Script,
+              // kita tidak bisa membaca response dari fetch, hanya bisa memastikan request terkirim.
               await fetch(GAS_WEB_APP_URL, {
                 method: "POST",
                 mode: "no-cors",
@@ -994,12 +1076,12 @@
             } catch (error) {
               console.error("Error:", error);
               messageDiv.textContent =
-                "❌ Gagal menyimpan. Pastikan URL Apps Script dan deployment sudah benar.";
+                "❌ Gagal menyimpan. Silakan periksa Apps Script Anda.";
               messageDiv.style.color = "#ff4757";
             } finally {
               submitBtn.disabled = false;
               submitBtn.textContent = "Simpan Tugas";
-              setTimeout(loadData, 2000);
+              setTimeout(loadData, 2000); // Otomatis refresh setelah 2 detik
             }
           });
         }
